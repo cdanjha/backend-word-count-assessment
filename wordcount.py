@@ -47,6 +47,39 @@ import sys
 # and builds and returns a word/count dict for it.
 # Then print_words() and print_top() can just call the utility function.
 
+# cite( https://anindifferentport.wordpress.com/2013/08/31/googles-python-class-wordcount-exercise/ )
+
+# def get_filename():
+#     user_file = raw_input("Enter filename: alice.txt")
+#     return open(pythonize_url('C:\Development\Python\google_python/' + user_file), 'r')
+     
+def file_to_string(alice):
+    with open(alice, "r") as file:
+        return file.read().lower().split()
+
+def generate_word_count(alice):
+    list_of_strings = file_to_string(alice)
+    unique_words = set()
+    for word in list_of_strings:
+        unique_words.add(word)
+    word_count = [(word, list_of_strings.count(word)) for word in unique_words]
+    return sorted(word_count, key=lambda x: x[1], reverse=True)
+
+def print_words(alice):
+    word_count = generate_word_count(alice)
+    for item in word_count:
+        print(item[0], item[1] )   
+
+def print_top(alice):
+    word_count = generate_word_count(alice)
+ 
+    if len(word_count) < 20:
+        num_words = len(word_count)
+    else:
+        num_words = 20
+ 
+    for i in range(num_words):
+        print word_count[i][0], word_count[i][1]
 ###
 
 # This basic command line argument parsing code is provided and
